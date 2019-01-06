@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Block : MonoBehaviour
@@ -12,6 +11,7 @@ public class Block : MonoBehaviour
     public int previousRow;
     public int targetX;
     public int targetY;
+    public float swipeResist = 1f; // do not swipe if stroke is shorter
 
     public bool isMatched = false;
 
@@ -112,7 +112,7 @@ public class Block : MonoBehaviour
 
     void CalculateAngle()
     {
-        if(Vector2.Distance(initialTouchPosition, finalTouchPosition) < .3f)
+        if(Vector2.Distance(initialTouchPosition, finalTouchPosition) < swipeResist)
             return;
 
         swipeAngle = Mathf.Atan2(
@@ -161,12 +161,15 @@ public class Block : MonoBehaviour
             var leftBlock1 = board.allBlocks[col - 1, row];
             var rightBlock1 = board.allBlocks[col + 1, row];
 
-            if(leftBlock1.tag == this.gameObject.tag && rightBlock1.tag == this.gameObject.tag)
+            if(leftBlock1 != null && rightBlock1 != null)
             {
-                // All three match
-                leftBlock1.GetComponent<Block>().isMatched = true;
-                rightBlock1.GetComponent<Block>().isMatched = true;
-                this.isMatched = true;
+                if(leftBlock1.tag == this.gameObject.tag && rightBlock1.tag == this.gameObject.tag)
+                {
+                    // All three match
+                    leftBlock1.GetComponent<Block>().isMatched = true;
+                    rightBlock1.GetComponent<Block>().isMatched = true;
+                    this.isMatched = true;
+                }
             }
         }
 
@@ -175,12 +178,15 @@ public class Block : MonoBehaviour
             var upperBlock1 = board.allBlocks[col, row + 1];
             var lowerBlock1 = board.allBlocks[col, row - 1];
 
-            if(upperBlock1.tag == this.gameObject.tag && lowerBlock1.tag == this.gameObject.tag)
+            if(upperBlock1 != null && lowerBlock1 != null)
             {
-                // All three match
-                upperBlock1.GetComponent<Block>().isMatched = true;
-                lowerBlock1.GetComponent<Block>().isMatched = true;
-                this.isMatched = true;
+                if(upperBlock1.tag == this.gameObject.tag && lowerBlock1.tag == this.gameObject.tag)
+                {
+                    // All three match
+                    upperBlock1.GetComponent<Block>().isMatched = true;
+                    lowerBlock1.GetComponent<Block>().isMatched = true;
+                    this.isMatched = true;
+                }
             }
         }
     }

@@ -33,11 +33,54 @@ public class Board : MonoBehaviour
                 backgroundTile.name = "(" + col + "|" + row + ")";
 
                 int blockElement = Random.Range(0, 6);
+
+                int maxIterations = 0;
+                while(MatchesAt(col, row, blocks[blockElement]) && maxIterations < 100)
+                {
+                    blockElement = Random.Range(0, 6);
+                    maxIterations++;
+                }
+
                 var block = Instantiate(blocks[blockElement], tempPosition, Quaternion.identity);
                 block.transform.parent = this.transform;
                 block.name = "(" + col + "|" + row + ")";
                 allBlocks[col, row] = block;
             }
         }
+    }
+
+    private bool MatchesAt(int col, int row, GameObject block)
+    {
+        if(col > 1 && row > 1)
+        {
+            if(allBlocks[col-1,row].tag == block.tag && allBlocks[col-2,row].tag == block.tag)
+            {
+                return true;
+            }
+
+            if(allBlocks[col, row-1].tag == block.tag && allBlocks[col, row-2].tag == block.tag)
+            {
+                return true;
+            }
+        } else if(col <= 1 || row <= 1)
+        {
+            if(row > 1)
+            {
+                if(allBlocks[col, row-1].tag == block.tag && allBlocks[col, row-2].tag == block.tag)
+                {
+                    return true;
+                }
+
+                if(col > 1)
+                {
+                    if(allBlocks[col - 1, row].tag == block.tag && allBlocks[col - 2, row].tag == block.tag)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }
