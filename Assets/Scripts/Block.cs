@@ -92,6 +92,9 @@ public class Block : MonoBehaviour
                 otherBlock.GetComponent<Block>().col = col;
                 col = previousCol;
                 row = previousRow;
+            } else
+            {
+                board.DestroyMatches();
             }
             otherBlock = null;
         }
