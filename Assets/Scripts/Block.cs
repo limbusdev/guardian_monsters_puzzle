@@ -142,5 +142,19 @@ public class Block : MonoBehaviour
                 this.isMatched = true;
             }
         }
+
+        if(row > 0 && row < board.height - 1)
+        {
+            var upperBlock1 = board.allBlocks[col, row + 1];
+            var lowerBlock1 = board.allBlocks[col, row - 1];
+
+            if(upperBlock1.tag == this.gameObject.tag && lowerBlock1.tag == this.gameObject.tag)
+            {
+                // All three match
+                upperBlock1.GetComponent<Block>().isMatched = true;
+                lowerBlock1.GetComponent<Block>().isMatched = true;
+                this.isMatched = true;
+            }
+        }
     }
 }
