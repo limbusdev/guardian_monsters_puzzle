@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
+    [Header("Board Variables")]
     public float swipeAngle = 0;
     public int col;
     public int row;
+    public int previousCol;
+    public int previousRow;
     public int targetX;
     public int targetY;
 
@@ -30,6 +33,8 @@ public class Block : MonoBehaviour
         targetY = (int)transform.position.y;
         col = targetX;
         row = targetY;
+        previousCol = col;
+        previousRow = row;
 	}
 	
 	// Update is called once per frame
@@ -73,6 +78,25 @@ public class Block : MonoBehaviour
         }
     }
 
+    // Co-Routine method
+    public IEnumerator CheckMoveCo()
+    {
+        yield return new WaitForSeconds(.5f);
+
+        if(otherBlock != null)
+        {
+            if(!isMatched && !otherBlock.GetComponent<Block>().isMatched)
+            {
+                // Undo last move
+                otherBlock.GetComponent<Block>().row = row;
+                otherBlock.GetComponent<Block>().col = col;
+                col = previousCol;
+                row = previousRow;
+            }
+            otherBlock = null;
+        }
+    }
+
     private void OnMouseDown()
     {
         // Convert position to Unity units
@@ -100,13 +124,13 @@ public class Block : MonoBehaviour
 
     void MoveBlocks()
     {
-        if(swipeAngle > -45 && swipeAngle <= 45 && col < board.width)
+        if(swipeAngle > -45 && swipeAngle <= 45 && col < board.width - 1)
         {
             // Right Swipe
             otherBlock = board.allBlocks[col + 1, row];
             otherBlock.GetComponent<Block>().col -= 1;
             col += 1;
-        } else if(swipeAngle > 45 && swipeAngle <= 135 && row < board.height)
+        } else if(swipeAngle > 45 && swipeAngle <= 135 && row < board.height - 1)
         {
             // Up Swipe
             otherBlock = board.allBlocks[col, row + 1];
@@ -125,6 +149,9 @@ public class Block : MonoBehaviour
             otherBlock.GetComponent<Block>().row += 1;
             row -= 1;
         }
+
+        // Call Coroutine
+        StartCoroutine(CheckMoveCo());
     }
 
     void FindMatches()
