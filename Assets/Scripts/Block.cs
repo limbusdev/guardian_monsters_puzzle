@@ -10,6 +10,7 @@ public class Block : MonoBehaviour
     public int targetX;
     public int targetY;
 
+    public bool isMatched = false;
 
 
     private Vector2 initialTouchPosition;
@@ -34,6 +35,14 @@ public class Block : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        FindMatches();
+
+        if(isMatched)
+        {
+            var mySprite = GetComponent<SpriteRenderer>();
+            mySprite.color = new Color(.5f, .5f, .5f, .5f);
+        }
+
         targetX = col;
         targetY = row;
 
@@ -115,6 +124,23 @@ public class Block : MonoBehaviour
             otherBlock = board.allBlocks[col, row - 1];
             otherBlock.GetComponent<Block>().row += 1;
             row -= 1;
+        }
+    }
+
+    void FindMatches()
+    {
+        if(col > 0 && col < board.width -1)
+        {
+            var leftBlock1 = board.allBlocks[col - 1, row];
+            var rightBlock1 = board.allBlocks[col + 1, row];
+
+            if(leftBlock1.tag == this.gameObject.tag && rightBlock1.tag == this.gameObject.tag)
+            {
+                // All three match
+                leftBlock1.GetComponent<Block>().isMatched = true;
+                rightBlock1.GetComponent<Block>().isMatched = true;
+                this.isMatched = true;
+            }
         }
     }
 }

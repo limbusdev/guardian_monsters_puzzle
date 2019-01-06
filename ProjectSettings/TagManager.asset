@@ -3,7 +3,19 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Flash Block
+  - Air Block
+  - Water Block
+  - Forest Block
+  - Earth Block
+  - Fire Block
+  - Arthropoda Block
+  - Lindworm Block
+  - Ice Block
+  - Mountain Block
+  - Demon Block
+  - Spirit Block
   layers:
   - Default
   - TransparentFX

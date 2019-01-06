@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114131439926587502}
   m_Layer: 0
   m_Name: BlockForest
-  m_TagString: Untagged
+  m_TagString: Forest Block
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -69,6 +69,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swipeAngle: 0
+  col: 0
+  row: 0
+  targetX: 0
+  targetY: 0
 --- !u!212 &212455403775135284
 SpriteRenderer:
   m_ObjectHideFlags: 1
