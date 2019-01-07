@@ -105,5 +105,30 @@ public class Board : MonoBehaviour
                 }
             }
         }
+        StartCoroutine(DecreaseRowCo());
+    }
+
+    // Co-Routine to collapse Columns
+    private IEnumerator DecreaseRowCo()
+    {
+        int nullCount = 0;
+
+        for(int col = 0; col < width; col++)
+        {
+            for(int row = 0; row < height; row++)
+            {
+                if(allBlocks[col, row] == null)
+                {
+                    nullCount++;
+                } else if(nullCount > 0)
+                {
+                    allBlocks[col, row].GetComponent<Block>().row -= nullCount;
+                    allBlocks[col, row] = null;
+                }
+            }
+            nullCount = 0;
+        }
+
+        yield return new WaitForSeconds(.4f);
     }
 }

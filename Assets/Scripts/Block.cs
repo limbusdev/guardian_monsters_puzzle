@@ -55,7 +55,11 @@ public class Block : MonoBehaviour
         {
             // Move block to target position
             tempPosition = new Vector2(targetX, transform.position.y);
-            transform.position = Vector2.Lerp(transform.position, tempPosition, .4f);
+            transform.position = Vector2.Lerp(transform.position, tempPosition, .6f);
+            if(board.allBlocks[col, row] != this.gameObject)
+            {
+                board.allBlocks[col, row] = this.gameObject;
+            }
         } else
         {
             // Set to final position
@@ -68,13 +72,16 @@ public class Block : MonoBehaviour
         {
             // Move block to target position
             tempPosition = new Vector2(transform.position.x, targetY);
-            transform.position = Vector2.Lerp(transform.position, tempPosition, .4f);
+            transform.position = Vector2.Lerp(transform.position, tempPosition, .6f);
+            if(board.allBlocks[col, row] != this.gameObject)
+            {
+                board.allBlocks[col, row] = this.gameObject;
+            }
         } else
         {
             // Set to final position
             tempPosition = new Vector2(transform.position.x, targetY);
             transform.position = tempPosition;
-            board.allBlocks[col, row] = this.gameObject;
         }
     }
 
