@@ -29,12 +29,11 @@ public class Block : MonoBehaviour
 	void Start ()
     {
         board = FindObjectOfType<Board>();
-        targetX = (int)transform.position.x;
-        targetY = (int)transform.position.y;
-        col = targetX;
-        row = targetY;
-        previousCol = col;
-        previousRow = row;
+        //targetX = (int)transform.position.x;
+        //targetY = (int)transform.position.y;
+        //col = targetX;
+        //row = targetY;
+        
 	}
 	
 	// Update is called once per frame
@@ -99,6 +98,8 @@ public class Block : MonoBehaviour
                 otherBlock.GetComponent<Block>().col = col;
                 col = previousCol;
                 row = previousRow;
+                yield return new WaitForSeconds(.5f);
+                board.currentState = GameState.MOVE;
             } else
             {
                 board.DestroyMatches();
@@ -109,27 +110,37 @@ public class Block : MonoBehaviour
 
     private void OnMouseDown()
     {
-        // Convert position to Unity units
-        initialTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if(board.currentState == GameState.MOVE)
+        {
+            // Convert position to Unity units
+            initialTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        }
     }
 
     private void OnMouseUp()
     {
-        finalTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        CalculateAngle();
+        if(board.currentState == GameState.MOVE)
+        {
+            finalTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            CalculateAngle();
+        }
     }
 
 
     void CalculateAngle()
     {
-        if(Vector2.Distance(initialTouchPosition, finalTouchPosition) < swipeResist)
-            return;
-
-        swipeAngle = Mathf.Atan2(
-            finalTouchPosition.y - initialTouchPosition.y,
-            finalTouchPosition.x - initialTouchPosition.x
-            ) * 180 / Mathf.PI;
-        MoveBlocks();
+        if(Vector2.Distance(initialTouchPosition, finalTouchPosition) > swipeResist)
+        {
+            swipeAngle = Mathf.Atan2(
+                finalTouchPosition.y - initialTouchPosition.y,
+                finalTouchPosition.x - initialTouchPosition.x
+                ) * 180 / Mathf.PI;
+            MoveBlocks();
+            board.currentState = GameState.WAIT;
+        } else
+        {
+            board.currentState = GameState.MOVE;
+        }
     }
 
     void MoveBlocks()
@@ -138,24 +149,32 @@ public class Block : MonoBehaviour
         {
             // Right Swipe
             otherBlock = board.allBlocks[col + 1, row];
+            previousCol = col;
+            previousRow = row;
             otherBlock.GetComponent<Block>().col -= 1;
             col += 1;
         } else if(swipeAngle > 45 && swipeAngle <= 135 && row < board.height - 1)
         {
             // Up Swipe
             otherBlock = board.allBlocks[col, row + 1];
+            previousCol = col;
+            previousRow = row;
             otherBlock.GetComponent<Block>().row -= 1;
             row += 1;
         } else if(swipeAngle > 135 || swipeAngle <= -135 && col > 0)
         {
             // Left Swipe
             otherBlock = board.allBlocks[col - 1, row];
+            previousCol = col;
+            previousRow = row;
             otherBlock.GetComponent<Block>().col += 1;
             col -= 1;
         } else if(swipeAngle <= -45 && swipeAngle > -135 && row > 0)
         {
             // Down Swipe
             otherBlock = board.allBlocks[col, row - 1];
+            previousCol = col;
+            previousRow = row;
             otherBlock.GetComponent<Block>().row += 1;
             row -= 1;
         }

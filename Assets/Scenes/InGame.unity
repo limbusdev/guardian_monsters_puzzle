@@ -364,14 +364,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   width: 6
   height: 10
+  offset: 10
   tilePrefab: {fileID: 1453831880205678, guid: a134602029dcc0445919ffa82942223e, type: 2}
   blocks:
   - {fileID: 1979165229126266, guid: de439e7b73441194badcad34aed4513d, type: 2}
   - {fileID: 1163190334744616, guid: e967b500e2b31334a9125df741523342, type: 2}
   - {fileID: 1820177727993718, guid: d28d328bd44166e45a86b484395b8cf9, type: 2}
-  - {fileID: 1893645194574626, guid: 54ef70a847343de4e8831b54043e8a2b, type: 2}
-  - {fileID: 1563695750342100, guid: 2c8710ddf177ac549a7726b4365d0405, type: 2}
   - {fileID: 1464160594295482, guid: a08193d94c5e97749b74209add5d1205, type: 2}
+  - {fileID: 1563695750342100, guid: 2c8710ddf177ac549a7726b4365d0405, type: 2}
 --- !u!1 &2005752679
 GameObject:
   m_ObjectHideFlags: 0

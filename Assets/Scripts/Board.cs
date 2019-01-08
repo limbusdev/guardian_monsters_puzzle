@@ -2,10 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum GameState
+{
+    WAIT, MOVE
+}
+
 public class Board : MonoBehaviour
 {
+    public GameState currentState = GameState.MOVE;
     public int width;
     public int height;
+    public int offset;
     public GameObject tilePrefab;
     public GameObject[] blocks;
     public GameObject[,] allBlocks;
@@ -27,7 +34,7 @@ public class Board : MonoBehaviour
         {
             for(int row = 0; row < height; row++)
             {
-                var tempPosition = new Vector2(col, row);
+                var tempPosition = new Vector2(col, row + offset);
                 var backgroundTile = Instantiate(tilePrefab, tempPosition, Quaternion.identity);
                 backgroundTile.transform.parent = this.transform;
                 backgroundTile.name = "(" + col + "|" + row + ")";
@@ -42,6 +49,8 @@ public class Board : MonoBehaviour
                 }
 
                 var block = Instantiate(blocks[blockElement], tempPosition, Quaternion.identity);
+                block.GetComponent<Block>().row = row;
+                block.GetComponent<Block>().col = col;
                 block.transform.parent = this.transform;
                 block.name = "(" + col + "|" + row + ")";
                 allBlocks[col, row] = block;
@@ -143,10 +152,12 @@ public class Board : MonoBehaviour
             {
                 if(allBlocks[col, row] == null)
                 {
-                    var tempPosition = new Vector2(col, row);
+                    var tempPosition = new Vector2(col, row + offset);
                     int blockToUse = Random.Range(0, blocks.Length);
                     var block = Instantiate(blocks[blockToUse], tempPosition, Quaternion.identity);
                     allBlocks[col, row] = block;
+                    block.GetComponent<Block>().row = row;
+                    block.GetComponent<Block>().col = col;
                 }
             }
         }
@@ -181,6 +192,8 @@ public class Board : MonoBehaviour
             yield return new WaitForSeconds(.5f);
             DestroyMatches();
         }
+        yield return new WaitForSeconds(.5f);
+        currentState = GameState.MOVE;
     }
 
 }
