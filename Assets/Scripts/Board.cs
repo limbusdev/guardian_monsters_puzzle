@@ -32,12 +32,12 @@ public class Board : MonoBehaviour
                 backgroundTile.transform.parent = this.transform;
                 backgroundTile.name = "(" + col + "|" + row + ")";
 
-                int blockElement = Random.Range(0, 6);
+                int blockElement = Random.Range(0, blocks.Length);
 
                 int maxIterations = 0;
                 while(MatchesAt(col, row, blocks[blockElement]) && maxIterations < 100)
                 {
-                    blockElement = Random.Range(0, 6);
+                    blockElement = Random.Range(0, blocks.Length);
                     maxIterations++;
                 }
 
@@ -130,5 +130,57 @@ public class Board : MonoBehaviour
         }
 
         yield return new WaitForSeconds(.4f);
+        StartCoroutine(FillBoardCo());
     }
+
+
+    // Refill Board
+    private void RefillBoard()
+    {
+        for(int col=0; col<width; col++)
+        {
+            for(int row = 0; row<height; row++)
+            {
+                if(allBlocks[col, row] == null)
+                {
+                    var tempPosition = new Vector2(col, row);
+                    int blockToUse = Random.Range(0, blocks.Length);
+                    var block = Instantiate(blocks[blockToUse], tempPosition, Quaternion.identity);
+                    allBlocks[col, row] = block;
+                }
+            }
+        }
+    }
+
+    // Checks for unwanted matches on board
+    private bool MatchesOnBoard()
+    {
+        for(int col=0; col<width; col++)
+        {
+            for(int row=0; row<height; row++)
+            {
+                if(allBlocks[col, row] != null)
+                {
+                    if(allBlocks[col,row].GetComponent<Block>().isMatched)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private IEnumerator FillBoardCo()
+    {
+        RefillBoard();
+        yield return new WaitForSeconds(.5f);
+
+        while(MatchesOnBoard())
+        {
+            yield return new WaitForSeconds(.5f);
+            DestroyMatches();
+        }
+    }
+
 }

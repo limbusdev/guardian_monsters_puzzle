@@ -253,7 +253,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.5, y: 5, z: -10}
+  m_LocalPosition: {x: 2.5, y: 4.5, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2005752680}
@@ -363,21 +363,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   width: 6
-  height: 12
+  height: 10
   tilePrefab: {fileID: 1453831880205678, guid: a134602029dcc0445919ffa82942223e, type: 2}
   blocks:
-  - {fileID: 1132765425171066, guid: ae89e3af21739bd4d9fdd8e532bbb239, type: 2}
   - {fileID: 1979165229126266, guid: de439e7b73441194badcad34aed4513d, type: 2}
-  - {fileID: 1464160594295482, guid: a08193d94c5e97749b74209add5d1205, type: 2}
-  - {fileID: 1082176707274670, guid: b406fd3d3f201894f8b8c70289bc304f, type: 2}
-  - {fileID: 1807024831051510, guid: 913705f2d45bbc243b30143acfeb684f, type: 2}
-  - {fileID: 1285252298237074, guid: 401f93a3b7ca44c41ad3980a31652e99, type: 2}
-  - {fileID: 1893645194574626, guid: 54ef70a847343de4e8831b54043e8a2b, type: 2}
-  - {fileID: 1358771136837638, guid: d789dc0cca562014dac3df572d1eafb3, type: 2}
-  - {fileID: 1820177727993718, guid: d28d328bd44166e45a86b484395b8cf9, type: 2}
-  - {fileID: 1563695750342100, guid: 2c8710ddf177ac549a7726b4365d0405, type: 2}
-  - {fileID: 1794350161339720, guid: 2f29058355e8c29479ecc3e0eb12080c, type: 2}
   - {fileID: 1163190334744616, guid: e967b500e2b31334a9125df741523342, type: 2}
+  - {fileID: 1820177727993718, guid: d28d328bd44166e45a86b484395b8cf9, type: 2}
+  - {fileID: 1893645194574626, guid: 54ef70a847343de4e8831b54043e8a2b, type: 2}
+  - {fileID: 1563695750342100, guid: 2c8710ddf177ac549a7726b4365d0405, type: 2}
+  - {fileID: 1464160594295482, guid: a08193d94c5e97749b74209add5d1205, type: 2}
 --- !u!1 &2005752679
 GameObject:
   m_ObjectHideFlags: 0
