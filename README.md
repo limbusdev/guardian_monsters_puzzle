@@ -1,3 +1,8 @@
+![](./Assets/Textures/block_styles/jelly/block_flash_jelly.png)
+![](./Assets/Textures/block_styles/jelly/block_forest_jelly.png)
+![](./Assets/Textures/block_styles/jelly/block_ice_jelly.png)
+![](./Assets/Textures/block_styles/jelly/block_arthropoda_jelly.png)
+
 # Guardian Monsters - Puzzle
 Puzzle Game with Guardian Monsters theme
 
